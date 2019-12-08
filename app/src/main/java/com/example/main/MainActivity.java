@@ -36,12 +36,10 @@ public class MainActivity extends FragmentActivity {
         initFragment();
         initListener();
         int id = getIntent().getIntExtra("id", 0);
-        if (id == 1) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_main,new UserFragment())
-                    .addToBackStack(null)
-                    .commit();
+        if (id == 4) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.activity_main, new UserFragment());
+            transaction.commit();
         }
     }
 
