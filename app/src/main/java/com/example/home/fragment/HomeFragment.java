@@ -1,12 +1,13 @@
 package com.example.home.fragment;
 
-import android.drm.ProcessedData;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.example.base.BaseFragment;
 import com.example.daoshousong.R;
@@ -15,8 +16,8 @@ import com.example.home.bean.ResultBeanData;
 import com.example.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
 import okhttp3.Call;
-import okhttp3.Request;
 
 import static android.content.ContentValues.TAG;
 
@@ -26,6 +27,7 @@ public class HomeFragment extends BaseFragment {    //主页面Fragment
     private ImageView ib_top;
     private Button btn_search_home;
     private HomeFragmentAdapter adapter;
+
     private ResultBeanData.ResultBean resultBean;   //返回的数据
 
     @Override
@@ -43,8 +45,7 @@ public class HomeFragment extends BaseFragment {    //主页面Fragment
     public void initData() {
         super.initData();
         Log.e(TAG, "主页数据被初始化了");
-        //联网请求主页的数据
-        getDataFromNet();
+        getDataFromNet();   //联网请求主页数据
     }
 
     private void getDataFromNet(){
@@ -58,13 +59,13 @@ public class HomeFragment extends BaseFragment {    //主页面Fragment
                     //当请求失败的时候回调
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Log.e("TAG", "联网失败" + e.getMessage());
+                        Log.e(TAG,"首页请求失败==" + e.getMessage());
                     }
 
-                    //当联网成功的时候回调，response:请求成功的数据
+                    //当联网成功的时候回调
                     @Override
                     public void onResponse(String response, int id) {
-                        Log.e(TAG,"首页请求成功"+response);
+                        Log.e(TAG,"首页请求成功==" + response);
                         //解析数据
                         processData(response);
                     }
@@ -75,14 +76,17 @@ public class HomeFragment extends BaseFragment {    //主页面Fragment
         ResultBeanData resultBeanData = JSON.parseObject(json,ResultBeanData.class);
         resultBean = resultBeanData.getResult();
         if(resultBean != null){
-            //有数据，设置适配器
+            //有数据
+            //设置适配器
             adapter = new HomeFragmentAdapter(mContext,resultBean);
             rvHome.setAdapter(adapter);
-        }else{
+
+            //设置布局管理者
+            rvHome.setLayoutManager(new GridLayoutManager(mContext,1));
+        }else {
             //没有数据
         }
-        Log.e(TAG,"解析成功" + resultBean.getHot_info().get(0).getName());
-
+        Log.e(TAG,"解析成功==" + resultBean.getHot_info().get(0).getName());
     }
 
     private void initListener() {

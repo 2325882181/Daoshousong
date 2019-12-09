@@ -10,7 +10,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initOkhttpClient();     //初始化okhttpclient
+        initOkhttpClient();     //  初始化OkhttpUtils
     }
 
     private void initOkhttpClient(){
