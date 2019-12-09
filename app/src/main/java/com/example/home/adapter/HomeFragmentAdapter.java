@@ -3,9 +3,19 @@ package com.example.home.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.example.daoshousong.R;
 import com.example.home.bean.ResultBeanData;
+import com.example.utils.Constants;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnLoadImageListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
@@ -49,15 +59,52 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
     //创建ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == BANNER){
+            return new BannerViewHolder(mContext,mLayoutInflater.inflate(R.layout.banner_viewpager,null));
+        }
         return null;
     }
 
     //绑定数据
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        if(getItemViewType(position) == BANNER){
+            BannerViewHolder bannerViewHolder = (BannerViewHolder)holder;
+            bannerViewHolder.setData(resultBean.getBanner_info());
+        }
     }
 
+    class BannerViewHolder extends RecyclerView.ViewHolder{
+        private Context mContext;
+        private Banner banner;
+
+        public BannerViewHolder(Context mContext, View itemView) {
+            super(itemView);
+            this.mContext = mContext;
+            this.banner = (Banner)itemView.findViewById(R.id.banner);
+        }
+
+        public void setData(List<ResultBeanData.ResultBean.BannerInfoBean> banner_info) {
+            //设置Banner的数据
+
+            //得到图片集合地址
+            List<String> imagesUrl = new ArrayList<>();
+            for (int i = 0;i<banner_info.size();i++ ){
+                String imageUrl = banner_info.get(i).getImage();
+                imagesUrl.add(imageUrl);
+            }
+            banner.setImages(imagesUrl, new OnLoadImageListener() {
+                @Override
+                public void OnLoadImage(ImageView view, Object url) {
+
+                    //联网请求图片
+                    Glide.with(mContext).load(Constants.BASE_URL_IMAGE + url).into(view);
+                }
+            });
+        }
+    }
+
+    //得到类型
     @Override
     public int getItemViewType(int position) {
         switch (position) {
