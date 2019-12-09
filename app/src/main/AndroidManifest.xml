@@ -4,6 +4,7 @@
 
 
     <application
+            android:name="com.example.main.MyApplication"
             android:allowBackup="true"
             android:icon="@drawable/daoshou"
             android:label="@string/app_name"
