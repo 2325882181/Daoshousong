@@ -34,19 +34,17 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
                 intent1.putExtra("id",4);
                 startActivity(intent1);
-                CustomerDao pd = new CustomerDao(LoginActivity.this);
+                /*CustomerDao pd = new CustomerDao(LoginActivity.this);
                 if(name == ""&&pwd == ""){
                     Toast.makeText(LoginActivity.this,"您未输入用户名与密码",Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "输出"+pd.find(name).getCname());
-                    /*System.out.println("输出"+pd.find(name).getCname());
-                    System.out.println(pd.find(name).getCpwd());*/
                 }else if(pd.getCount() == 0){
                     Toast.makeText(LoginActivity.this,"您未注册",Toast.LENGTH_SHORT).show();
                 }else if(pd.find(name).getCname().equals(name)&&pd.find(name).getCpwd().equals(pwd)){
                     startActivity(intent1);
                 }else{
                     Toast.makeText(LoginActivity.this,"你输入的用户名或密码有误",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
 

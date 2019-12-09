@@ -1,7 +1,10 @@
 package com.example.home.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import com.example.home.bean.ResultBeanData;
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter {
 
@@ -30,7 +33,20 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter {
      */
     public static final int HOT = 5;
 
+    //初始化布局
+    private  Context mContext;
+    private  ResultBeanData.ResultBean resultBean;
+
+    //数据
+    private LayoutInflater mLayoutInflater;
+
     private int currentType = BANNER;       //当前类型
+
+    public HomeFragmentAdapter(Context mContext, ResultBeanData.ResultBean resultBean) {
+        this.mContext = mContext;
+        this.resultBean = resultBean;
+        mLayoutInflater = LayoutInflater.from(mContext);
+    }
 
     //创建ViewHolder
     @Override
